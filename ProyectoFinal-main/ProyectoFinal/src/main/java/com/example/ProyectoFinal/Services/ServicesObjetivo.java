@@ -29,4 +29,16 @@ public class ServicesObjetivo {
     public void eliminar(int id) {
         repository.deleteById(id);
     }
+
+    public Objetivo marcarComoCompletado(int id) {
+        Optional<Objetivo> objetivoOpt = repository.findById(id);
+        if (objetivoOpt.isPresent()) {
+            Objetivo objetivo = objetivoOpt.get();
+            objetivo.setCompletado(true); // Asegúrate que tu entidad tiene este setter
+            return repository.save(objetivo);
+        } else {
+            throw new RuntimeException("Objetivo no encontrado con id: " + id);
+        }
+
+    }
 }

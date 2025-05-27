@@ -2,6 +2,7 @@ package com.example.ProyectoFinal.Controller;
 
 import com.example.ProyectoFinal.Model.Objetivo;
 import com.example.ProyectoFinal.Repository.RepositoryObjetivo;
+import com.example.ProyectoFinal.Services.ServicesObjetivo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,6 +14,9 @@ public class ControllerObjetivo {
 
     @Autowired
     private RepositoryObjetivo repository;
+
+    @Autowired
+    private ServicesObjetivo service; // <-- Asegúrate de inyectar el servicio
 
     @GetMapping
     public List<Objetivo> getAll() {
@@ -34,5 +38,10 @@ public class ControllerObjetivo {
     public void delete(@PathVariable int id) {
         repository.deleteById(id);
     }
-}
 
+
+    @PutMapping("/{id}/completar")
+    public Objetivo completar(@PathVariable int id) {
+        return service.marcarComoCompletado(id);
+    }
+}
